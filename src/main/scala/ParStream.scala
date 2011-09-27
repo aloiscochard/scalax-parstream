@@ -66,8 +66,6 @@ trait ParStream[+A] {
       }
 
       val executor = Executors.newFixedThreadPool(ParStream.this.poolSize)
-
-      start
     }
 
     final class Queue extends Actor {
@@ -89,7 +87,7 @@ trait ParStream[+A] {
 
       def hasNext: Boolean = {
         look match {
-          case Some(x) => { Coordinator.this.start; true }
+          case Some(x) => { true }
           case None => { queue ! Stop; false }
         }
       }
@@ -104,14 +102,6 @@ trait ParStream[+A] {
         if (current == null) current = queue !? Next
         current
       }
-    }
-
-    private var started = false
-
-    private def start = if (!started) {
-      queue.start
-      generator.start
-      started = true
     }
   }
 }
