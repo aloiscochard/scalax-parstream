@@ -3,6 +3,8 @@ package scalax
 import org.specs2.mutable._
 import ParStream._
 
+// TODO [aloiscochard] Add some sense to this pseudo-benchmark
+
 class WikipediaBenchmark extends Specification {
   def stopwatch[T](f: => T) = { val start = System.currentTimeMillis; val r = f; (r, System.currentTimeMillis - start) }
 
@@ -44,7 +46,9 @@ class WikipediaBenchmark extends Specification {
 
   def write(image: (String, Array[Byte])) = {
     val path = folderPath + image._1
-    val fos = new java.io.FileOutputStream(new java.io.File(path))
+    val f = new java.io.File(path)
+    f.delete
+    val fos = new java.io.FileOutputStream(f)
     fos.write(image._2)
     fos.close
     image._2.length
@@ -72,7 +76,7 @@ object WikipediaClient {
     stream.toByteArray
   }
 
-  def randomImages(limit: Int = 100) = new Iterator[String] {
+  def randomImages(limit: Int = 40) = new Iterator[String] {
     val h = new HttpNoLog
 
     def hasNext: Boolean = {
