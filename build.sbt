@@ -10,6 +10,8 @@ scalacOptions += "-unchecked"
 
 scalacOptions += "-deprecation"
 
+parallelExecution in Test := false 
+
 libraryDependencies += "org.specs2" %% "specs2" % "1.6.1" % "test"
 
 libraryDependencies += "net.databinder" %% "dispatch-http" % "0.8.5" % "test"
