@@ -15,19 +15,19 @@ class WikipediaBenchmark extends Specification {
     "benchmark - nopar" in {
       val (size, time) = stopwatch { process(images) }
       println("nopar:\t\t %sms (%s)".format(time, size))
-      true mustEqual true
+      success
     }
 
     "benchmark - par" in {
       val (size, time) = stopwatch { process(images.toList.par.iterator) }
       println("par:\t\t %sms (%s)".format(time, size))
-      true mustEqual true
+      success
     }
 
     "benchmark - parstream" in {
       val (size, time) = stopwatch { process(images.parstream) }
       println("parstream:\t %sms (%s)".format(time, size))
-      true mustEqual true
+      success
     }
 
   }
